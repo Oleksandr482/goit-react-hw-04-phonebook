@@ -1,7 +1,8 @@
 import { ContactsForm } from './ContactsForm/ContactsForm';
 import { ContactsList } from './ContactsList/ContactsList';
 import { Filter } from './Filter/Filter';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useLocaleStorage } from 'hooks/useLocaleStorage';
 
 export const App = () => {
   const startContacts = [
@@ -11,14 +12,8 @@ export const App = () => {
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ];
 
-  const [contacts, setContacts] = useState(
-    JSON.parse(localStorage.getItem('contacts')) ?? startContacts
-  );
+  const [contacts, setContacts] = useLocaleStorage(startContacts);
   const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
 
   const filterInput = e => {
     setFilter(e.currentTarget.value);
